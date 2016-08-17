@@ -21,9 +21,9 @@ createHtml() {
     echo "</html>" >> $1
 }
 
-echo "All rights reserved CROSP 2015. Modified by zaksid 2015"
+echo "All rights reserved CROSP 2015. Modified by iamlos 2016"
 echo "-------------------------------------------------------"
-echo -n "Entre host name i.e. brazzers.com > "
+echo -n "Entre host name i.e. google.com > "
 
 while [[ $hostname = "" ]]; do
    read hostname
@@ -46,10 +46,10 @@ testpage=$hostdir/index.html
 
 createHtml $testpage
 
-hostconf=/etc/apache2/sites-available/$hostname.conf
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$hostname.conf
+hostconf=/etc/nginx/sites-available/$hostname.conf
+sudo cp /etc/nginx/sites-available/000-default.conf /etc/nginx/sites-available/$hostname.conf
 
-email="thezaksid@gmail.com"
+email="greenbrickmedia@gmail.com"
 sudo sed -i "s/webmaster@localhost/$email/g" $hostconf
 sudo sed -i "s/.*DocumentRoot.*/ \tDocumentRoot\ \/var\/www\/$hostname\/public_html /g" $hostconf
 sudo sed -i "/ServerAdmin*/a \\\tServerName\ $hostname" $hostconf >> /dev/null
@@ -57,5 +57,5 @@ sudo sed -i "/ServerAdmin*/a \\\tServerAlias\ www.$hostname" $hostconf >> /dev/n
 sudo a2ensite $hostname.conf
 sudo sed -i "1i127.0.0.1\t$hostname" /etc/hosts
 
-sudo service apache2 restart
+sudo service nginx restart
 echo "New virtualhost has been just added, please type in browser $hostname, to check if it works."
