@@ -45,8 +45,8 @@ done
 
 testpage=$hostdir/index.html
 createHtml $testpage $pagename
-hostconf=/etc/apache2/sites-available/$hostname.conf
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$hostname.conf
+hostconf=/etc/nginx/sites-available/$hostname.conf
+sudo cp /etc/nginx/sites-available/000-default.conf /etc/nginx/sites-available/$hostname.conf
 echo "Please enter your email address"
 
 while [[ $email = "" ]]; do
@@ -59,5 +59,5 @@ sudo sed -i "/ServerAdmin*/a \\\tServerName\ $hostname " $hostconf >> /dev/null
 sudo sed -i "/ServerAdmin*/a \\\tServerAlias\ www.$hostname " $hostconf >> /dev/null
 sudo a2ensite $hostname.conf
 sudo sed -i "1i127.0.0.1\t$hostname" /etc/hosts
-sudo service apache2 restart
+sudo service nginx restart
 echo "New virtualhost has been just added, please type in browser $hostname, to check if it works. "
